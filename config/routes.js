@@ -1,6 +1,11 @@
 const admin = require('./admin')
 
 module.exports = app => {
+    app.route('/')
+        .get((req, res) => {
+            res.send('Free Gym - API')
+        })
+
     app.post('/register', app.api.user.save)
     app.post('/login', app.api.auth.signin)
     app.post('/validateToken', app.api.auth.validateToken)

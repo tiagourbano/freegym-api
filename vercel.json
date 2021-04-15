@@ -12,10 +12,6 @@
       "dest": "index.js"
     },
     {
-      "src": "/home1",
-      "dest": "./config/routes.js"
-    },
-    {
       "src": "/(.*)",
       "dest": "index.js"
     }

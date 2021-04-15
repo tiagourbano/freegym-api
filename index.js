@@ -13,6 +13,10 @@ consign()
     .then('./config/routes.js')
     .into(app)
 
+app.get('/', (req, res) => {
+    res.send('Free Gym - API')
+})
+
 app.listen(5000, () => {
     console.log('Backend executando...')
 })

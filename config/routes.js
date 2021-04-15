@@ -1,10 +1,9 @@
 const admin = require('./admin')
 
 module.exports = app => {
-    app.route('/')
-        .get((req, res) => {
-            res.send('Free Gym - API')
-        })
+    app.get('/home', (req, res) => {
+        res.send('Free Gym - API Home')
+    })
 
     app.post('/register', app.api.user.save)
     app.post('/login', app.api.auth.signin)

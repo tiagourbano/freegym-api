@@ -16,3 +16,5 @@ consign()
 app.listen(5000, () => {
     console.log('Backend executando...')
 })
+
+module.exports = app

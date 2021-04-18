@@ -1,5 +1,5 @@
 const moment = require('moment');
-const bcrypt = require('bcrypt-nodejs')
+const bcrypt = require('bcrypt-nodejs');
 
 module.exports = app => {
   const Booking = app.mongoose.model('Booking', {
@@ -117,6 +117,7 @@ module.exports = app => {
 
     if (booking && booking.checkedIn && booking.original) {
       return res.json({
+        bookingDate: currentDateTimeHourBooking,
         status: 'busy',
         type: 'warning',
         message: `Em uso: ${booking.checkedIn.torre} - ${booking.checkedIn.unidade}`,
@@ -125,6 +126,7 @@ module.exports = app => {
 
     if (booking && booking.checkedIn && !booking.original) {
       return res.json({
+        bookingDate: currentDateTimeHourBooking,
         status: 'busy',
         type: 'error',
         message: `Em uso: ${booking.checkedIn.torre} - ${booking.checkedIn.unidade}`,
@@ -184,6 +186,18 @@ module.exports = app => {
     return res.status(204).send();
   }
 
+  const checkOut = async (req, res) => {
+    try {
+      const booking = await Booking.findOne({ bookingDate: req.body.bookingDate });
+      delete booking.checkedIn;
+      await booking.updateOne({ checkedIn: null });
+
+      return res.status(204).send();
+    } catch(err) {
+      return res.status(400).send('Falha ao fazer check-out!');
+    }
+  }
+
   return {
     Booking,
     save,
@@ -191,6 +205,7 @@ module.exports = app => {
     removeOwnBookingById,
     getAvailableBookingByDay,
     getCurrentStatusBooking,
-    checkIn
+    checkIn,
+    checkOut
   }
 }

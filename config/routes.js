@@ -1,13 +1,6 @@
 const admin = require('./admin')
 
 module.exports = app => {
-    app.get('/home', (req, res) => {
-        res.send('Free Gym - API Home')
-    })
-    app.get('/home1', (req, res) => {
-        res.send('Free Gym - API Home1')
-    })
-
     app.post('/register', app.api.user.save)
     app.post('/login', app.api.auth.signin)
     app.post('/validateToken', app.api.auth.validateToken)
@@ -32,6 +25,10 @@ module.exports = app => {
     app.route('/booking/check-in')
         .all(app.config.passport.authenticate())
         .post(app.api.booking.checkIn)
+
+    app.route('/booking/check-out')
+        .all(app.config.passport.authenticate())
+        .post(app.api.booking.checkOut)
 
     // app.route('/users/:id')
     //     .all(app.config.passport.authenticate())

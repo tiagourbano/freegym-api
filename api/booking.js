@@ -49,6 +49,7 @@ module.exports = app => {
 
     const bookings = await Booking.find({
       userId,
+      original: true,
       bookingDate: {
         $gte: startDayBooking,
         $lte: endDayBooking
